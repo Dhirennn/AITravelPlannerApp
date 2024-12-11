@@ -1,15 +1,49 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigation, useRouter } from 'expo-router'
 import { Colors } from './../../../constants/Colors'
 import { StyleSheet } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from './../../../configs/FirebaseConfig'
 
 export default function SignIn() {
   
     const navigation = useNavigation();
 
     const router = useRouter();
+
+    const [email, setEmail] = useState();
+    
+    const [password, setPassword] = useState();
+
+
+    const onSignIn = () => {
+
+
+        if(!email && !password){
+            return;
+        }
+
+
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            console.log(user)
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+
+            // If wrong password, tell the user
+            if(error.code == 'auth/invalid-credential'){
+            }
+
+        });
+    }
   
     useEffect(
         () => {
@@ -74,7 +108,9 @@ export default function SignIn() {
                 <Text style={{
                     fontFamily:'roboto'
                 }}>Email</Text>
-                <TextInput style={styles.input} placeholder="Enter email"
+                <TextInput style={styles.input} 
+                onChangeText={(value)=>setEmail(value)}
+                placeholder="Enter email"
                 placeholderTextColor="#C0C0C0"></TextInput>
             </View>
 
@@ -85,7 +121,9 @@ export default function SignIn() {
                 <Text style={{
                     fontFamily:'roboto'
                 }}>Password</Text>
-                <TextInput style={styles.input} placeholder="Enter password"
+                <TextInput style={styles.input} 
+                onChangeText={(value)=>setPassword(value)}
+                placeholder="Enter password"
                 placeholderTextColor="#C0C0C0"
                 secureTextEntry={true}
                 
@@ -94,7 +132,9 @@ export default function SignIn() {
 
             { /** Sign-In Button */}
 
-            <View
+            <TouchableOpacity
+
+                onPress={onSignIn}
                 style={{
                     padding:20,
                     backgroundColor: Colors.PRIMARY,
@@ -113,7 +153,7 @@ export default function SignIn() {
                 >Sign In</Text>
                 
             
-            </View>
+            </TouchableOpacity>
 
 
 
