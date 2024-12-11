@@ -2,6 +2,8 @@ import { Stack } from "expo-router";
 import { useFonts } from "expo-font"
 import { CreateTripContext } from "../context/CreateTripContext"
 import { useState } from "react";
+import { enGB, registerTranslation } from 'react-native-paper-dates'
+registerTranslation('en-GB', enGB)
 
 export default function RootLayout() {
 
