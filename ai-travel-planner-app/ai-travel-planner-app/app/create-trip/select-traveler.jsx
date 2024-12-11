@@ -6,7 +6,6 @@ import { SelectTravelerList } from '../../constants/Options';
 import OptionCard from '../../components/CreateTrip/OptionCard';
 import {CreateTripContext} from './../../context/CreateTripContext'
 
-
 export default function SelectTraveler() {
 
     // back button
@@ -85,7 +84,7 @@ export default function SelectTraveler() {
                     }}
 
                 >
-                    <OptionCard option={item} selectedTraveler={selectedTraveler} />
+                    <OptionCard option={item} selectedOption={selectedTraveler} />
                 </TouchableOpacity>
                 )}
             />
