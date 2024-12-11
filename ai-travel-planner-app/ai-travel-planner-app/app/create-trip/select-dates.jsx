@@ -1,17 +1,32 @@
+import { en, registerTranslation } from 'react-native-paper-dates';
+// Register the 'en' locale
+registerTranslation('en', en);
+
+
 import { View, Text, Button, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigation } from 'expo-router'
 import { Colors } from '../../constants/Colors';
 import DatePicker from 'react-native-modern-datepicker';
 // import { Button } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import moment from 'moment';
+import {CreateTripContext} from './../../context/CreateTripContext'
+
 
 
 export default function SelectDates() {
 
     const [range, setRange] = useState({ startDate: undefined, endDate: undefined });
+
     const [open, setOpen] = useState(false);
+
+    const [startDate, setStartDate] = useState();
+
+    const [endDate, setEndDate] = useState();
+
+    const {tripData, setTripData} = useContext(CreateTripContext)
 
 
     const navigation = useNavigation();
@@ -32,13 +47,40 @@ export default function SelectDates() {
     }, [setOpen]);
   
     const onConfirm = ({ startDate, endDate }) => {
-      const dayCount = (endDate - startDate) / (1000 * 60 * 60 * 24);
+      const dayCount = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
       if (dayCount > 5) {
         // Show an error or re-open the picker
         alert("Please select an end date within 5 days of the start date.");
       } else {
         setRange({ startDate, endDate });
+        console.log("Start Date:", startDate);
+        console.log("End Date:", endDate);
+    
+        // Update state using moment for formatting
+        if (startDate) {
+          setStartDate(moment(startDate).format("YYYY-MM-DD"));
+        }
+    
+        if (endDate) {
+          setEndDate(moment(endDate).format("YYYY-MM-DD"));
+        }
+
+        
+        if(startDate && endDate){
+          console.log(dayCount);
+        }
+
+        setTripData({
+          ...tripData,
+          startDate: startDate,
+          endDate: endDate,
+          totalNoOfDays: dayCount
+        })
+
+        console.log(tripData);
+
         setOpen(false);
+
       }
     };
     
