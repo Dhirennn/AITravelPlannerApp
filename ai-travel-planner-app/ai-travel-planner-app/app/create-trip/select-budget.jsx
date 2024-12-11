@@ -32,6 +32,14 @@ export default function SelectBudget() {
     })
   }, [selectedOption])
 
+  const onClickContinue = () => {
+    if(!selectedOption) {
+      alert('Please select a budget option.');
+      return;
+    }
+    router.push('');
+  }
+
   return (
     <View
       style={{
@@ -84,7 +92,7 @@ export default function SelectBudget() {
 
       <TouchableOpacity
       onPress={() => {
-        router.push('/create-trip/select-dates')
+        onClickContinue();
       }}
       style={{
           backgroundColor: Colors.PRIMARY,
