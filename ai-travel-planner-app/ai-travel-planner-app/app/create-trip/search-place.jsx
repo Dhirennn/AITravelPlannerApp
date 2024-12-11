@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React, { useContext, useEffect } from 'react'
-import { useNavigation } from 'expo-router'
+import { useNavigation, useRouter } from 'expo-router'
 import { Colors } from './../../constants/Colors';
 import 'react-native-get-random-values';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -14,6 +14,8 @@ export default function SearchPlace() {
   const navigation = useNavigation();
 
   const {tripData, setTripData} = useContext(CreateTripContext)
+
+  const router = useRouter();
 
   useEffect(() => {
     navigation.setOptions({
@@ -72,9 +74,11 @@ export default function SearchPlace() {
           photoRef: details?.photos[0].photo_reference,
           url: details?.url
         }
+      });
 
-
-      })
+      
+      // route it to new page (select-traveler page)
+      router.push('/create-trip/select-traveler');
 
 
     }}
