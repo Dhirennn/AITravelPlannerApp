@@ -30,11 +30,15 @@ export default function SignIn() {
             height:'100%'
         }}
         >
-        <Ionicons name="arrow-back" size={24} color="black" />
+        <Ionicons name="arrow-back" size={24} color="black" style={{
+            marginTop:'-15%',
+            marginBottom:'5%'
+        }}/>
             <Text
                 style={{
                     fontFamily:'roboto-bold',
                     fontSize:30,
+                    marginTop:'5%'
                 }}>Let's Sign You In!</Text>
 
             <Text
