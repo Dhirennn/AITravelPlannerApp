@@ -37,7 +37,7 @@ export default function SelectBudget() {
       alert('Please select a budget option.');
       return;
     }
-    router.push('');
+    router.push('/create-trip/review-trip');
   }
 
   return (
