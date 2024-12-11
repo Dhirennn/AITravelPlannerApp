@@ -1,9 +1,11 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigation, useRouter } from 'expo-router'
 import { StyleSheet } from 'react-native'
 import { Colors } from './../../../constants/Colors'
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+import { auth } from './../../../configs/FirebaseConfig'
 
 
 export default function SignUp() {
@@ -11,6 +13,12 @@ export default function SignUp() {
     const navigation = useNavigation();
 
     const router = useRouter();
+
+    const [email, setEmail] = useState();
+
+    const [password, setPassword] = useState(); 
+
+    const [fullName, setFullName] = useState(); 
   
     useEffect(
         () => {
@@ -20,6 +28,32 @@ export default function SignUp() {
         }
         
         , [])
+
+
+    const onCreateAccount = () => {
+
+        if(!email && !password && !fullName){
+            // add toast for ios and android here later on
+            return;
+
+        }
+
+        
+
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          console.log(user)
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage)
+          // ..
+        });
+    }
 
 
   return (
@@ -57,7 +91,9 @@ export default function SignUp() {
                 fontFamily:'roboto'
             }}>Full Name</Text>
             <TextInput style={styles.input} placeholder="Enter your full name"
-            placeholderTextColor="#C0C0C0"></TextInput>
+            placeholderTextColor="#C0C0C0"
+            onChangeText={(value)=>setFullName(value)}
+            ></TextInput>
         </View>
 
 
@@ -71,7 +107,9 @@ export default function SignUp() {
                 fontFamily:'roboto'
             }}>Email</Text>
             <TextInput style={styles.input} placeholder="Enter email"
-            placeholderTextColor="#C0C0C0"></TextInput>
+            placeholderTextColor="#C0C0C0"
+            onChangeText={(value)=>setEmail(value)}
+            ></TextInput>
         </View>
 
         { /** Password */}
@@ -84,7 +122,7 @@ export default function SignUp() {
             <TextInput style={styles.input} placeholder="Enter password"
             placeholderTextColor="#C0C0C0"
             secureTextEntry={true}
-            
+            onChangeText={(value)=>setPassword(value)}
             ></TextInput>
         </View>
 
@@ -92,7 +130,8 @@ export default function SignUp() {
 
         { /** Create Account Button */}
 
-        <View
+        <TouchableOpacity
+        onPress={onCreateAccount}
         style={{
             padding:20,
             backgroundColor: Colors.PRIMARY,
@@ -111,7 +150,7 @@ export default function SignUp() {
         >Create Account</Text>
         
     
-    </View>
+    </TouchableOpacity>
 
 
 
