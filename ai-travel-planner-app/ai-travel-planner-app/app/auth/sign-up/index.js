@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useNavigation, useRouter } from 'expo-router'
 import { StyleSheet } from 'react-native'
 import { Colors } from './../../../constants/Colors'
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 
 export default function SignUp() {
@@ -28,6 +29,17 @@ export default function SignUp() {
         backgroundColor:Colors.WHITE,
         height:'100%'
     }}>
+
+        {/** Back button to sign-in page */}
+
+        <TouchableOpacity onPress={()=> router.back()}>
+            <Ionicons name="arrow-back" size={24} color="black" style={{
+                marginTop:'-10%',
+                marginBottom:'5%'
+            }}/>
+        </TouchableOpacity>
+
+
       <Text
         style={{
             fontFamily:'roboto-bold',

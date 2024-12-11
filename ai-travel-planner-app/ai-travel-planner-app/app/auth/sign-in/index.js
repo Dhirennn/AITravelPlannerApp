@@ -30,10 +30,18 @@ export default function SignIn() {
             height:'100%'
         }}
         >
-        <Ionicons name="arrow-back" size={24} color="black" style={{
-            marginTop:'-15%',
-            marginBottom:'5%'
-        }}/>
+
+
+        {/** Back button to landing page */}
+
+        <TouchableOpacity onPress={()=> router.back()}>
+            <Ionicons name="arrow-back" size={24} color="black" style={{
+                marginTop:'-15%',
+                marginBottom:'5%'
+            }}/>
+        </TouchableOpacity>
+
+
             <Text
                 style={{
                     fontFamily:'roboto-bold',
