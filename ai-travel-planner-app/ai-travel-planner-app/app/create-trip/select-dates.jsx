@@ -5,7 +5,7 @@ registerTranslation('en', en);
 
 import { View, Text, Button, TouchableOpacity } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigation } from 'expo-router'
+import { useNavigation, useRouter } from 'expo-router'
 import { Colors } from '../../constants/Colors';
 import DatePicker from 'react-native-modern-datepicker';
 // import { Button } from 'react-native-paper';
@@ -30,6 +30,8 @@ export default function SelectDates() {
 
 
     const navigation = useNavigation();
+
+    const router = useRouter();
 
     useEffect(() => {
         navigation.setOptions({
@@ -80,6 +82,8 @@ export default function SelectDates() {
         console.log(tripData);
 
         setOpen(false);
+
+        router.push('/create-trip/select-budget')
 
       }
     };
