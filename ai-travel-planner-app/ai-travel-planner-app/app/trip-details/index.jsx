@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { Colors } from '../../constants/Colors';
 import moment from 'moment';
+import FlightInfo from '../../components/TripDetails/FlightInfo';
 
 export default function TripDetails() {
   const navigation = useNavigation();
   const { trip } = useLocalSearchParams();
-
   const [tripDetails, setTripDetails] = useState(null);
 
   useEffect(() => {
@@ -17,12 +17,18 @@ export default function TripDetails() {
       headerTitle: '',
     });
 
+    // console.log('Raw trip parameter:', trip);
+
     if (trip) {
       try {
         const parsedTrip = JSON.parse(trip); // Parse the main trip object
         const parsedTripData = JSON.parse(parsedTrip.tripData); // Parse the tripData JSON string
-        setTripDetails({ ...parsedTrip, tripData: parsedTripData }); // Merge parsed tripData into the main object
-        console.log('Parsed Trip Details:', { ...parsedTrip, tripData: parsedTripData });
+
+        // Merge parsedTripData into parsedTrip and set to tripDetails
+        setTripDetails({ ...parsedTrip, tripData: parsedTripData });
+
+        console.log("Parsed trip LOL:" + JSON.stringify(parsedTrip));
+
       } catch (error) {
         console.error('Error parsing trip or tripData:', error);
       }
@@ -32,7 +38,7 @@ export default function TripDetails() {
   return tripDetails && (
     <View>
       {/* Image Section */}
-      {tripDetails.tripData.locationInfo.photoRef ? (
+      {tripDetails.tripData?.locationInfo?.photoRef ? (
         <Image
           source={{
             uri:
@@ -71,16 +77,14 @@ export default function TripDetails() {
             color: Colors.PRIMARY,
           }}
         >
-          {tripDetails.tripData.locationInfo.name}
+          {tripDetails.tripData?.locationInfo?.name || 'Location not available'}
         </Text>
 
         {/* Trip Start and End Dates */}
-
         <View
           style={{
-            display: 'flex',
             flexDirection: 'row',
-            gap: 6,
+            alignItems: 'center',
             marginTop: 10,
           }}
         >
@@ -91,7 +95,9 @@ export default function TripDetails() {
               color: Colors.GRAY,
             }}
           >
-            {moment(tripDetails.tripData.startDate).format('DD MMM YYYY')}
+            {tripDetails.tripData?.startDate
+              ? moment(tripDetails.tripData.startDate).format('DD MMM YYYY')
+              : 'Start date not available'}
           </Text>
 
           <Text
@@ -99,11 +105,13 @@ export default function TripDetails() {
               fontFamily: 'roboto',
               fontSize: 18,
               color: Colors.GRAY,
+              marginLeft: 6,
             }}
           >
-            - {moment(tripDetails.tripData.endDate).format('DD MMM YYYY')}
+            - {tripDetails.tripData?.endDate
+              ? moment(tripDetails.tripData.endDate).format('DD MMM YYYY')
+              : 'End date not available'}
           </Text>
-        
         </View>
 
         <Text
@@ -111,12 +119,20 @@ export default function TripDetails() {
             fontFamily: 'outfit',
             fontSize: 18,
             color: Colors.GRAY,
-            marginTop: 10
+            marginTop: 10,
           }}
         >
-          🚌 {tripDetails.tripData.traveler.title}
+          🚌 {tripDetails.tripData?.traveler?.title || 'Traveler info not available'}
         </Text>
 
+        {/* Flight Info */}
+        <FlightInfo 
+          flightData={tripDetails?.tripPlan?.flight?.exampleFlight || null}
+        />
+
+
+        {/* Hotels List */}
+        {/* Trip Day Planner Info */}
       </View>
     </View>
   );
