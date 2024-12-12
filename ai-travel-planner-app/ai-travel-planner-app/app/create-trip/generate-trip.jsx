@@ -20,7 +20,7 @@ export default function GenerateTrip() {
 
   useEffect(() => {
     tripData && generateAiTrip();
-  }, [tripData])
+  }, [])
 
 
   const generateAiTrip = async () => {
@@ -44,7 +44,9 @@ export default function GenerateTrip() {
     const docId = (Date.now()).toString();
     const result_ = await setDoc(doc(db, "UserTrips", docId), {
       userEmail: user.email,
-      tripData: tripResp
+      tripPlan: tripResp,  // AI response
+      tripData: JSON.stringify(tripData), // User selected data,
+      docId: docId
     })
 
 
