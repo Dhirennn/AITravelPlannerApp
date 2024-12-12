@@ -77,7 +77,7 @@ export default function MyTrip() {
 
       
       {loading&&<ActivityIndicator size={'large'} color={Colors.PRIMARY}></ActivityIndicator>}
-      {userTrips?.length == undefined ? <StartNewTripCard /> : 
+      {userTrips?.length == 0 ? <StartNewTripCard /> : 
         <UserTripList userTrips={userTrips}>
 
         </UserTripList>}

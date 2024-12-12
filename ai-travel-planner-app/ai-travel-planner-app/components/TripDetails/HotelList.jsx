@@ -1,7 +1,15 @@
 import { View, Text, FlatList, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { getPhotoRef } from '../../services/GooglePlaceAPI';
+import HotelCard from './HotelCard';
 
 export default function HotelList({hotelList}) {
+
+
+  // useEffect(() => {
+  //   getGooglePhotoRef();
+  // }, [])
+
   return (
     <View
       style={{
@@ -24,69 +32,7 @@ export default function HotelList({hotelList}) {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={({item, index}) => (
-          <View
-            style={{
-              marginRight: 35,
-              width:200
-            }}
-          >
-
-          <Image 
-            source={require('./../../assets/images/login.jpeg')}
-            style={{
-              width:200,
-              height:120,
-              borderRadius:15
-            }}
-            
-            >
-          </Image>
-
-          <View
-            style={{
-              padding:5
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: 'roboto-medium',
-                fontSize: 16,
-                marginTop: 5,
-                
-              }}
-            >{item.hotelName}</Text>
-          </View>
-
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-              <Text
-                style={{
-                  fontFamily: 'roboto',
-                  fontSize: 14,
-                  color: 'gray',
-                  marginTop: 5
-                }}
-                >⭐ {item.rating}
-              </Text>
-
-              <Text
-              style={{
-                fontFamily: 'roboto',
-                fontSize: 14,
-                color: 'gray',
-                marginTop: 5
-              }}
-              >💰 {item.pricePerNight}/night
-            </Text>
-          </View>
-          
-
-          </View>
+          <HotelCard item={item} index={index}></HotelCard>
 
         )}
       >
