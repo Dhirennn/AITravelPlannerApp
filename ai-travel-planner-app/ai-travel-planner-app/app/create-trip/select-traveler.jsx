@@ -33,10 +33,10 @@ export default function SelectTraveler() {
         })
     }, [selectedTraveler])
 
-    // executes when selectedTraveler changes
-    useEffect(() => {
-        console.log(tripData);
-    }, [tripData])    
+    // // executes when selectedTraveler changes
+    // useEffect(() => {
+    //     console.log(tripData);
+    // }, [tripData])    
 
 
 

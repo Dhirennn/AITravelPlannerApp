@@ -27,16 +27,16 @@ export default function PlaceCard({ dayDetails, index }) {
         for (let placeIndex = 0; placeIndex < activity.placesToVisit.length; placeIndex++) {
           const place = activity.placesToVisit[placeIndex];
           const result = await getPhotoRef(place.placeName);
-          console.log(`HELLO ${JSON.stringify(result, null, 2)}`); // For debugging
+          // console.log(`HELLO ${JSON.stringify(result, null, 2)}`); // For debugging
 
           const photoReference = result?.results?.[0]?.photos?.[0]?.photo_reference;
-          console.log(`FUCK_MY_LIFE ${photoReference}`); // For debugging
+          // console.log(`FUCK_MY_LIFE ${photoReference}`); // For debugging
 
           if (photoReference) {
             // Use a unique key for each photoRef, e.g., `${activityIndex}-${placeIndex}`
             refs[`${activityIndex}-${placeIndex}`] = photoReference;
           } else {
-            console.log(`No photo reference found for ${place.placeName}`);
+            // console.log(`No photo reference found for ${place.placeName}`);
           }
         }
       }

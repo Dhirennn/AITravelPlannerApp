@@ -29,9 +29,9 @@ export default function SearchPlace() {
 
 
   // Executes when tripData changes
-  useEffect(() => {
-    console.log(tripData);
-  }, [tripData])
+  // useEffect(() => {
+  //   console.log(tripData);
+  // }, [tripData])
 
 
   return (

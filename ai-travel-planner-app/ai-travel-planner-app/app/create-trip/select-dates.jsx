@@ -55,8 +55,8 @@ export default function SelectDates() {
         alert("Please select an end date within 5 days of the start date.");
       } else {
         setRange({ startDate, endDate });
-        console.log("Start Date:", startDate);
-        console.log("End Date:", endDate);
+        // console.log("Start Date:", startDate);
+        // console.log("End Date:", endDate);
     
         // Update state using moment for formatting
         if (startDate) {
@@ -69,7 +69,7 @@ export default function SelectDates() {
 
         
         if(startDate && endDate){
-          console.log(dayCount);
+          // console.log(dayCount);
         }
 
         setTripData({
@@ -79,7 +79,7 @@ export default function SelectDates() {
           totalNoOfDays: dayCount
         })
 
-        console.log(tripData);
+        // console.log(tripData);
 
         setOpen(false);
 

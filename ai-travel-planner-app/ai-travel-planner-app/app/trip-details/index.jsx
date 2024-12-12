@@ -29,7 +29,7 @@ export default function TripDetails() {
         // Merge parsedTripData into parsedTrip and set to tripDetails
         setTripDetails({ ...parsedTrip, tripData: parsedTripData });
 
-        console.log("Parsed trip LOL:" + JSON.stringify(parsedTrip));
+        // console.log("Parsed trip LOL:" + JSON.stringify(parsedTrip));
 
       } catch (error) {
         console.error('Error parsing trip or tripData:', error);
