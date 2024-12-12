@@ -1,16 +1,51 @@
-import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, ActivityIndicator, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { Colors } from '../../constants/Colors'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import StartNewTripCard from '../../components/MyTrips/StartNewTripCard';
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { auth, db } from './../../configs/FirebaseConfig';
+import UserTripList from '../../components/MyTrips/UserTripList';
 
 export default function MyTrip() {
 
-  const [userTrips, setUserTrips] = useState();
+  const [userTrips, setUserTrips] = useState([]);
+    
+  const [loading, setLoading] = useState(false);
+
+  const user = auth.currentUser;
+
+
+    // fetching data
+    const getMyTrips = async() => {
+      setLoading(true);
+  
+      // clear the state
+      // otherwise it will keep adding the same data
+      setUserTrips([]);
+  
+      const q = query(collection(db, "UserTrips"), where("userEmail", "==", user.email));
+  
+      const querySnapshot = await getDocs(q);
+  
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        setUserTrips(prev => [...prev, doc.data()]);
+      });
+  
+      setLoading(false);
+  
+    }
+    
+  
+    useEffect(() => {
+      user&&getMyTrips();
+    }, [user])
 
 
   return (
-    <View style={{
+    <ScrollView style={{
       padding:25,
       paddingTop:55,
       backgroundColor: Colors.WHITE,
@@ -18,9 +53,7 @@ export default function MyTrip() {
 
 
     }}>
-
       <View
-      
       style={{
         marginTop: '6%',
         flexDirection: 'row',
@@ -42,12 +75,17 @@ export default function MyTrip() {
 
       </View>
 
-      {userTrips?.length == undefined ? <StartNewTripCard /> : <Text>Trips</Text>}
+      
+      {loading&&<ActivityIndicator size={'large'} color={Colors.PRIMARY}></ActivityIndicator>}
+      {userTrips?.length == undefined ? <StartNewTripCard /> : 
+        <UserTripList userTrips={userTrips}>
+
+        </UserTripList>}
 
       {console.log(userTrips)}
 
       
       
-    </View>
+    </ScrollView>
   )
 }
