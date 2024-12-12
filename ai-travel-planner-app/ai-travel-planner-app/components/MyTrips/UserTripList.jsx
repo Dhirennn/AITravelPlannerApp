@@ -18,14 +18,29 @@ export default function UserTripList({ userTrips }) {
               marginTop: '6%',
             }}
           >
-            <Image
-              source={require('./../../assets/images/login.jpeg')}
-              style={{
-                width: '100%',
-                height: 240,
-                borderRadius: 15,
-              }}
-            />
+            
+          {LatestTrip.locationInfo?.photoRef? 
+            <Image source={{uri:
+             'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference='
+             +LatestTrip.locationInfo?.photoRef
+             +'&key='+process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY}}
+             style={{
+                 width:'100%',
+                 height:270,
+                 objectFit:'cover',
+                 borderRadius:15
+             }}
+             />
+            :
+            <Image 
+             source={require('./../../assets/images/login.jpeg')}
+                 style={{
+                     width:'100%',
+                     height:270,
+                     objectFit:'cover',
+                     borderRadius:15
+                 }}
+             />}
           </View>
 
 
@@ -38,7 +53,7 @@ export default function UserTripList({ userTrips }) {
             <Text
               style={{
                 fontFamily: 'roboto-medium',
-                fontSize: 20,
+                fontSize: 28,
               }}
             >
               {LatestTrip.locationInfo?.name}

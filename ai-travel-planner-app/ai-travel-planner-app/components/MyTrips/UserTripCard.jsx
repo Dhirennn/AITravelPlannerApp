@@ -23,14 +23,16 @@ export default function UserTripCard({userTrip}) {
         alignItems: 'center',
       }}
     >
-      <Image source={require('./../../assets/images/login.jpeg')}
-      style={{
-        width: 100,
-        height: 100,
-        borderRadius: 15,
-      }}
-      >
-      </Image>
+            <Image source={{uri:
+             'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference='
+             +formatData(userTrip.tripData).locationInfo?.photoRef
+             +'&key='+process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY}}
+             style={{
+                 width:100,
+                 height:100,
+                 borderRadius:15
+             }}
+             />
       
       <View
         style={{gap:4}}
