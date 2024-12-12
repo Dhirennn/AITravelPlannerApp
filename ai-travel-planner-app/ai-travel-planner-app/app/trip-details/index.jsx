@@ -1,6 +1,8 @@
 import { View, Text, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { Colors } from '../../constants/Colors';
+import moment from 'moment';
 
 export default function TripDetails() {
   const navigation = useNavigation();
@@ -27,9 +29,10 @@ export default function TripDetails() {
     }
   }, [trip]);
 
-  return tripDetails&&(
+  return tripDetails && (
     <View>
-      {tripDetails?.tripData?.locationInfo?.photoRef ? (
+      {/* Image Section */}
+      {tripDetails.tripData.locationInfo.photoRef ? (
         <Image
           source={{
             uri:
@@ -39,7 +42,7 @@ export default function TripDetails() {
               process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY,
           }}
           style={{
-            marginTop:0,
+            marginTop: 0,
             width: '100%',
             height: 330,
             borderRadius: 15,
@@ -48,6 +51,73 @@ export default function TripDetails() {
       ) : (
         <Text>Loading trip details or photo not available</Text>
       )}
+
+      {/* Details Section */}
+      <View
+        style={{
+          padding: 15,
+          backgroundColor: Colors.WHITE,
+          height: '100%',
+          marginTop: -30,
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+        }}
+      >
+        {/* Location Name */}
+        <Text
+          style={{
+            fontFamily: 'roboto-bold',
+            fontSize: 28,
+            color: Colors.PRIMARY,
+          }}
+        >
+          {tripDetails.tripData.locationInfo.name}
+        </Text>
+
+        {/* Trip Start and End Dates */}
+
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: 6,
+            marginTop: 10,
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: 'roboto',
+              fontSize: 18,
+              color: Colors.GRAY,
+            }}
+          >
+            {moment(tripDetails.tripData.startDate).format('DD MMM YYYY')}
+          </Text>
+
+          <Text
+            style={{
+              fontFamily: 'roboto',
+              fontSize: 18,
+              color: Colors.GRAY,
+            }}
+          >
+            - {moment(tripDetails.tripData.endDate).format('DD MMM YYYY')}
+          </Text>
+        
+        </View>
+
+        <Text
+          style={{
+            fontFamily: 'outfit',
+            fontSize: 18,
+            color: Colors.GRAY,
+            marginTop: 10
+          }}
+        >
+          🚌 {tripDetails.tripData.traveler.title}
+        </Text>
+
+      </View>
     </View>
   );
 }
