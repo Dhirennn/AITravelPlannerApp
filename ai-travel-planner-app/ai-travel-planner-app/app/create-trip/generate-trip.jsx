@@ -35,7 +35,7 @@ export default function GenerateTrip() {
     // console.log(result.response.text());
 
     const tripResp = JSON.parse(result.response.text());
-    console.log("LMAOOOOOO" + tripResp);
+    // console.log("LMAOOOOOO" + tripResp);
     setLoading(false);
 
 
