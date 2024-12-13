@@ -1,108 +1,123 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { Colors } from '@/constants/Colors'
-import { useRouter } from 'expo-router'
+// Login.jsx
+
+import React from 'react';
+import { 
+  View, 
+  Text, 
+  ImageBackground, 
+  StyleSheet, 
+  TouchableOpacity, 
+  SafeAreaView, 
+  Dimensions 
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient'; // For gradient overlays
+import { Colors } from '@/constants/Colors';
+import { useRouter } from 'expo-router';
+import Ionicons from '@expo/vector-icons/Ionicons'; // Optional: For decorative icons
+
+const { width, height } = Dimensions.get('window');
 
 export default function Login() {
-
   const router = useRouter();
 
-
   return (
-    <View>
-      <Image source={require('./../assets/images/login.jpeg')}
-      
-        style={{
+    <SafeAreaView style={styles.safeArea}>
+      {/* Full-Screen Background Image */}
+      <ImageBackground
+        source={require('./../assets/images/login.jpeg')}
+        style={styles.imageBackground}
+        resizeMode="cover"
+      >
+        {/* Gradient Overlay for Text Readability */}
+        <LinearGradient
+          colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.7)']}
+          style={styles.gradientOverlay}
+        />
 
-          width:'100%',
-          height:530
+        {/* Content Container */}
+        <View style={styles.contentContainer}>
+          {/* "Cuti" Title */}
+          <Text style={styles.title}>Cuti</Text>
 
-        }}
-      />
-
-        <View style={styles.container}>
-
-        <Text
-        
-          style={{
-            fontSize:30,
-            fontFamily:'roboto-bold',
-            textAlign:'center',
-            marginTop: 10
-            
-          }}>AI Travel Planner</Text>
-
-          
-          <Text
-          
-          style={{
-            marginTop:'5%',
-            fontSize:16,
-            fontFamily:'roboto-regular',
-            textAlign:'center',
-            color: Colors.GRAY
-
-
-          }}
-          
-          >
-          Plan your perfect trip effortlessly. Personalized itineraries, real-time updates, and seamless adventures await. Your journey starts with us!
-          
+          {/* Tagline */}
+          <Text style={styles.tagline}>
+            Plan your perfect trip effortlessly. Personalized itineraries, real-time updates, and seamless adventures await. Your journey starts with us!
           </Text>
 
-
-          <TouchableOpacity style={styles.button}
-          
-            onPress={()=> router.push('/auth/sign-in')}
-
+          {/* Get Started Button */}
+          <TouchableOpacity 
+            style={styles.button}
+            onPress={() => router.push('/auth/sign-in')}
+            activeOpacity={0.8} // For a subtle feedback effect
           >
-        
-          <Text
-            style={{
-              color:Colors.WHITE,
-              textAlign:'center',
-              padding:3,
-              fontSize:16
-
-            }}
-
-
-          >Get Started</Text>
-        
-        </TouchableOpacity>
-
-
-
-
+            <Text style={styles.buttonText}>Get Started</Text>
+          </TouchableOpacity>
         </View>
-
-
-
-
-    </View>
-  )
+      </ImageBackground>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-  container:{
-    backgroundColor:Colors.WHITE,
-    marginTop:-20,
-    height:'100%',
-    borderTopRightRadius:20,
-    borderTopLeftRadius:20,
-    padding:25,
+  safeArea: {
+    flex: 1,
+    backgroundColor: Colors.WHITE, // Fallback color
   },
-  button:{
-    padding:15,
-    backgroundColor:Colors.PRIMARY,
-    borderRadius:99,
-    marginTop:'25%'
-  }
-
-
-
-})
-
-
-
-
+  imageBackground: {
+    width: width,
+    height: height,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: -59, // Adjust to position content vertically
+  },
+  gradientOverlay: {
+    position: 'absolute',
+    width: width,
+    height: height,
+  },
+  contentContainer: {
+    position: 'absolute',
+    top: '40%', // Adjust to position content vertically
+    width: '85%',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 80,
+    fontFamily: 'great-vibes', // Ensure this font is loaded
+    color: Colors.WHITE,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
+    textAlign: 'center',
+  },
+  tagline: {
+    marginTop: 20,
+    fontSize: 18,
+    fontFamily: 'roboto-regular',
+    textAlign: 'center',
+    color: Colors.WHITE,
+    lineHeight: 24, // Improved readability
+  },
+  button: {
+    marginTop: 40,
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    backgroundColor: Colors.WHITE,
+    borderRadius: 30,
+    alignItems: 'center',
+    shadowColor: Colors.PRIMARY,
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6.65,
+    elevation: 10, // For Android shadow
+  },
+  buttonText: {
+    color: Colors.PRIMARY,
+    fontSize: 20,
+    fontFamily: 'roboto-medium',
+  },
+});
